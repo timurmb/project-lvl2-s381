@@ -39,5 +39,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "commander": "^2.19.0"
+  }
 }
