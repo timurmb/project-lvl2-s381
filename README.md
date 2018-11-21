@@ -4,3 +4,6 @@
 
 ## Setup and Start
 [![asciicast](https://asciinema.org/a/Vpk2bqabGPcdgKl436yt0F9Pz.png)](https://asciinema.org/a/Vpk2bqabGPcdgKl436yt0F9Pz?speed=3)
+
+## Compare 2 JSON files
+[![asciicast](https://asciinema.org/a/7NKPsbzSfGeVOGbgEvdRfw31g.png)](https://asciinema.org/a/7NKPsbzSfGeVOGbgEvdRfw31g?speed=3)
