@@ -4,11 +4,13 @@ import path from 'path';
 
 const normalize = (filepath) => {
   const workingDir = process.cwd();
+  console.log(workingDir);
   return path.resolve(workingDir, filepath);
 };
 
 function gendiff(path1, path2) {
   const path1Normalized = normalize(path1);
+  console.log(path1Normalized);
   const path2Normalized = normalize(path2);
 
   const str1 = fs.readFileSync(path1Normalized, 'utf8');
