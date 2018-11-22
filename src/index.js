@@ -21,10 +21,10 @@ function gendiff(path1, path2) {
     if (!lodash.has(obj2, key)) return ` -${key}:${obj1[key]}`;
     if (!lodash.has(obj1, key)) return ` +${key}:${obj2[key]}`;
     if (lodash.has(obj1, key) && obj1[key] === obj2[key]) return `  ${key}:${obj2[key]}`;
-    if (lodash.has(obj1, key) && obj1[key] !== obj2[key]) return ` +${key}:${obj2[key]}\n -${key}:${obj1[key]}`;
+    if (lodash.has(obj1, key) && obj1[key] !== obj2[key]) return [` +${key}:${obj2[key]}`, ` -${key}:${obj1[key]}`];
     return 'strange key';
   });
-  const result = `{\n${arr.join('\n')}\n}`;
+  const result = `{\n${lodash.flatten(arr).join('\n')}\n}`;
   return result;
 }
 
