@@ -18,13 +18,13 @@ function gendiff(path1, path2) {
 
   const keys = lodash.union(Object.keys(obj1), Object.keys(obj2));
   const arr = keys.map((key) => {
-    if (!lodash.has(obj2, key)) return ` -${key}:${obj1[key]}\n`;
-    if (!lodash.has(obj1, key)) return ` +${key}:${obj2[key]}\n`;
-    if (lodash.has(obj1, key) && obj1[key] === obj2[key]) return `  ${key}:${obj2[key]}\n`;
-    if (lodash.has(obj1, key) && obj1[key] !== obj2[key]) return ` +${key}:${obj2[key]}\n -${key}:${obj1[key]}\n`;
+    if (!lodash.has(obj2, key)) return ` -${key}:${obj1[key]}`;
+    if (!lodash.has(obj1, key)) return ` +${key}:${obj2[key]}`;
+    if (lodash.has(obj1, key) && obj1[key] === obj2[key]) return `  ${key}:${obj2[key]}`;
+    if (lodash.has(obj1, key) && obj1[key] !== obj2[key]) return ` +${key}:${obj2[key]}\n -${key}:${obj1[key]}`;
     return 'strange key';
   });
-  const result = `{\n${arr.join('')}}`;
+  const result = `{\n${arr.join('\n')}\n}`;
   return result;
 }
 
