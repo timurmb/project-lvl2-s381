@@ -7,3 +7,6 @@
 
 ## Compare 2 JSON files
 [![asciicast](https://asciinema.org/a/7NKPsbzSfGeVOGbgEvdRfw31g.png)](https://asciinema.org/a/7NKPsbzSfGeVOGbgEvdRfw31g?speed=3)
+
+## Compare 2 YAML files
+[![asciicast](https://asciinema.org/a/CtmJ79UFS4JNp6IfCdZGW7wHw.png)](https://asciinema.org/a/CtmJ79UFS4JNp6IfCdZGW7wHw?speed=3)
