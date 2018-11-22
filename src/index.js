@@ -22,6 +22,7 @@ function gendiff(path1, path2) {
     if (!lodash.has(obj1, key)) return ` +${key}:${obj2[key]}\n`;
     if (lodash.has(obj1, key) && obj1[key] === obj2[key]) return `  ${key}:${obj2[key]}\n`;
     if (lodash.has(obj1, key) && obj1[key] !== obj2[key]) return ` +${key}:${obj2[key]}\n -${key}:${obj1[key]}\n`;
+    return 'strange key';
   });
   const result = `{\n${arr.join('')}}`;
   return result;
