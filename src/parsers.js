@@ -6,6 +6,6 @@ const parsers = {
 };
 
 export default (format) => {
-  if (parsers[format]) return parsers[format];
-  return 'unknown format';
+  if (!parsers[format]) throw new Error('unknown format');
+  return parsers[format];
 };
