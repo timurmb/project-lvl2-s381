@@ -10,3 +10,6 @@
 
 ## Compare 2 YAML files
 [![asciicast](https://asciinema.org/a/CtmJ79UFS4JNp6IfCdZGW7wHw.png)](https://asciinema.org/a/CtmJ79UFS4JNp6IfCdZGW7wHw?speed=3)
+
+## Compare 2 .ini files
+[![asciicast](https://asciinema.org/a/PH6unO5lT88nRfvicwsyf5sSq.png)](https://asciinema.org/a/PH6unO5lT88nRfvicwsyf5sSq?speed=3)
