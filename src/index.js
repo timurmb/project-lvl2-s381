@@ -8,25 +8,41 @@ const normalize = (filepath) => {
   return path.resolve(workingDir, filepath);
 };
 
+const buildAST = (obj1, obj2) => {
+  const keys = lodash.union(Object.keys(obj1), Object.keys(obj2));
+  return keys.map((key) => {
+    if (!lodash.has(obj2, key)) return { key, value: obj1[key], action: 'deleted' };
+    if (!lodash.has(obj1, key)) return { key, value: obj2[key], action: 'added' };
+    if (lodash.has(obj1, key) && obj1[key] === obj2[key]) return { key, value: obj2[key], action: 'same' };
+    if (lodash.has(obj1, key) && obj1[key] !== obj2[key]) {
+      return [{ key, value: obj2[key], action: 'added' }, { key, value: obj1[key], action: 'deleted' }];
+    }
+    return 'strange key';
+  });
+};
+
+const actions = {
+  deleted: '-',
+  added: '+',
+  same: ' ',
+};
+
+const render = (AST) => {
+  const arr = lodash.flatten(AST).map(obj => ` ${actions[obj.action]}${obj.key}:${obj.value}`);
+  return `{\n${arr.join('\n')}\n}`;
+};
+
 function gendiff(path1, path2, format = 'json') {
   const path1Normalized = normalize(path1);
   const path2Normalized = normalize(path2);
 
   const str1 = fs.readFileSync(path1Normalized, 'utf8');
   const str2 = fs.readFileSync(path2Normalized, 'utf8');
-  const parser = selectParser(format);
-  const obj1 = parser(str1);
-  const obj2 = parser(str2);
+  const parse = selectParser(format);
+  const obj1 = parse(str1);
+  const obj2 = parse(str2);
 
-  const keys = lodash.union(Object.keys(obj1), Object.keys(obj2));
-  const arr = keys.map((key) => {
-    if (!lodash.has(obj2, key)) return ` -${key}:${obj1[key]}`;
-    if (!lodash.has(obj1, key)) return ` +${key}:${obj2[key]}`;
-    if (lodash.has(obj1, key) && obj1[key] === obj2[key]) return `  ${key}:${obj2[key]}`;
-    if (lodash.has(obj1, key) && obj1[key] !== obj2[key]) return [` +${key}:${obj2[key]}`, ` -${key}:${obj1[key]}`];
-    return 'strange key';
-  });
-  const result = `{\n${lodash.flatten(arr).join('\n')}\n}`;
+  const result = render(buildAST(obj1, obj2));
   return result;
 }
 
