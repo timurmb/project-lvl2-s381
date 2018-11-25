@@ -13,3 +13,6 @@
 
 ## Compare 2 .ini files
 [![asciicast](https://asciinema.org/a/PH6unO5lT88nRfvicwsyf5sSq.png)](https://asciinema.org/a/PH6unO5lT88nRfvicwsyf5sSq?speed=3)
+
+## Compare 2 nested files
+[![asciicast](https://asciinema.org/a/IkrDV8PjhgQBJicRc7voSq6H3.png)](https://asciinema.org/a/IkrDV8PjhgQBJicRc7voSq6H3?speed=3)
