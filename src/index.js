@@ -36,26 +36,35 @@ const stringify = (v, level, renderCopy) => {
   return renderCopy(buildAST(v, v, level + 1));
 };
 
-const render = (AST) => {
-  let spaces;
-  const arr = lodash.flatten(AST).map((obj) => {
-    spaces = ' '.repeat(obj.level * 2);
-    if (!obj.children) return ` ${spaces}${actions[obj.action]}${obj.key}: ${stringify(obj.value, obj.level, render)}`;
-    return `  ${spaces}${obj.key}: ${render(obj.children)}`;
-  });
-  return `{\n${arr.join('\n')}\n${spaces}}`;
+const renderers = {
+  standart: function renderStandart(AST) {
+    let spaces;
+    const arr = lodash.flatten(AST).map((obj) => {
+      spaces = ' '.repeat(obj.level * 2);
+      if (!obj.children) return ` ${spaces}${actions[obj.action]}${obj.key}: ${stringify(obj.value, obj.level, renderStandart)}`;
+      return `  ${spaces}${obj.key}: ${renderStandart(obj.children)}`;
+    });
+    return `{\n${arr.join('\n')}\n${spaces}}`;
+  },
+  plain: 'plain',
 };
 
-function gendiff(path1, path2, format = 'json') {
+const selectRenderer = (format) => {
+  if (!renderers[format]) throw new Error('unknown rendering format');
+  return renderers[format];
+};
+
+function gendiff(path1, path2, inputFormat = 'json', outputFormat = 'standart') {
   const path1Normalized = normalize(path1);
   const path2Normalized = normalize(path2);
 
   const str1 = fs.readFileSync(path1Normalized, 'utf8');
   const str2 = fs.readFileSync(path2Normalized, 'utf8');
-  const parse = selectParser(format);
+  const parse = selectParser(inputFormat);
   const obj1 = parse(str1);
   const obj2 = parse(str2);
 
+  const render = selectRenderer(outputFormat);
   const result = render(buildAST(obj1, obj2));
   return result;
 }
