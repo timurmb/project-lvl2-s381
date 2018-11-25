@@ -47,3 +47,26 @@ test('step4_test2', () => {
   const result = fs.readFileSync('__tests__/__fixtures__/test2result', 'utf8');
   expect(gendiff(path1, path2, format)).toBe(result);
 });
+
+test('step5_test3_Nested_json', () => {
+  const path1 = '__tests__/__fixtures__/test3before_Nested.json';
+  const path2 = '__tests__/__fixtures__/test3after_Nested.json';
+  const result = fs.readFileSync('__tests__/__fixtures__/test3result_Nested', 'utf8');
+  expect(gendiff(path1, path2)).toBe(result);
+});
+
+test('step5_test3_Nested_yml', () => {
+  const path1 = '__tests__/__fixtures__/test3before_Nested.yml';
+  const path2 = '__tests__/__fixtures__/test3after_Nested.yml';
+  const format = 'yml';
+  const result = fs.readFileSync('__tests__/__fixtures__/test3result_Nested', 'utf8');
+  expect(gendiff(path1, path2, format)).toBe(result);
+});
+
+test('step5_test3_Nested_ini', () => {
+  const path1 = '__tests__/__fixtures__/test3before_Nested.ini';
+  const path2 = '__tests__/__fixtures__/test3after_Nested.ini';
+  const format = 'ini';
+  const result = fs.readFileSync('__tests__/__fixtures__/test3result_Nested', 'utf8');
+  expect(gendiff(path1, path2, format)).toBe(result);
+});

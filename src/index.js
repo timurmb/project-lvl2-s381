@@ -3,33 +3,47 @@ import lodash from 'lodash';
 import path from 'path';
 import selectParser from './parsers';
 
+const actions = { deleted: '-', added: '+', same: ' ' };
+
 const normalize = (filepath) => {
   const workingDir = process.cwd();
   return path.resolve(workingDir, filepath);
 };
 
-const buildAST = (obj1, obj2) => {
+const buildAST = (obj1, obj2, level = 0) => {
   const keys = lodash.union(Object.keys(obj1), Object.keys(obj2));
   return keys.map((key) => {
-    if (!lodash.has(obj2, key)) return { key, value: obj1[key], action: 'deleted' };
-    if (!lodash.has(obj1, key)) return { key, value: obj2[key], action: 'added' };
-    if (lodash.has(obj1, key) && obj1[key] === obj2[key]) return { key, value: obj2[key], action: 'same' };
-    if (lodash.has(obj1, key) && obj1[key] !== obj2[key]) {
-      return [{ key, value: obj2[key], action: 'added' }, { key, value: obj1[key], action: 'deleted' }];
+    if (!lodash.has(obj2, key)) return { key, value: obj1[key], action: 'deleted', level };
+    if (!lodash.has(obj1, key)) return { key, value: obj2[key], action: 'added', level };
+
+    if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
+      return { key, children: buildAST(obj1[key], obj2[key], level + 1), level };
+    }
+
+    if (obj1[key] === obj2[key]) return { key, value: obj2[key], action: 'same', level };
+    if (obj1[key] !== obj2[key]) {
+      return [
+        { key, value: obj2[key], action: 'added', level },
+        { key, value: obj1[key], action: 'deleted', level },
+      ];
     }
     return 'strange key';
   });
 };
 
-const actions = {
-  deleted: '-',
-  added: '+',
-  same: ' ',
+const stringify = (v, level, renderCopy) => {
+  if (typeof v !== 'object') return v;
+  return renderCopy(buildAST(v, v, level + 1));
 };
 
 const render = (AST) => {
-  const arr = lodash.flatten(AST).map(obj => ` ${actions[obj.action]}${obj.key}:${obj.value}`);
-  return `{\n${arr.join('\n')}\n}`;
+  let spaces;
+  const arr = lodash.flatten(AST).map((obj) => {
+    spaces = ' '.repeat(obj.level * 2);
+    if (!obj.children) return ` ${spaces}${actions[obj.action]}${obj.key}: ${stringify(obj.value, obj.level, render)}`;
+    return `  ${spaces}${obj.key}: ${render(obj.children)}`;
+  });
+  return `{\n${arr.join('\n')}\n${spaces}}`;
 };
 
 function gendiff(path1, path2, format = 'json') {
