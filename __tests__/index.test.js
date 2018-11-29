@@ -70,3 +70,12 @@ test('step5_test3_Nested_ini', () => {
   const result = fs.readFileSync('__tests__/__fixtures__/test3result_Nested', 'utf8');
   expect(gendiff(path1, path2, format)).toBe(result);
 });
+
+test('step6_test3_Nested_Plain', () => {
+  const path1 = '__tests__/__fixtures__/test3before_Nested.json';
+  const path2 = '__tests__/__fixtures__/test3after_Nested.json';
+  const formatin = 'json';
+  const formatout = 'plain';
+  const result = fs.readFileSync('__tests__/__fixtures__/test3result_Nested_Plain', 'utf8');
+  expect(gendiff(path1, path2, formatin, formatout)).toBe(result);
+});
