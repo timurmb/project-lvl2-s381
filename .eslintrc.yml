@@ -18,5 +18,5 @@ extends:
 rules:
   no-console: 0
   #object-curly-newline: ["error", { "minProperties": 5 }]
-  object-curly-newline: 'off'
+  #object-curly-newline: 'off'
   

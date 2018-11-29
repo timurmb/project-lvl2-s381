@@ -7,16 +7,41 @@ import selectParser from './parsers';
 const buildAST = (obj1, obj2, parent = '') => {
   const keys = lodash.union(Object.keys(obj1), Object.keys(obj2));
   return keys.map((key) => {
-    if (!lodash.has(obj2, key)) return { key, value: obj1[key], type: 'deleted', parent };
-    if (!lodash.has(obj1, key)) return { key, value: obj2[key], type: 'added', parent };
-
+    if (!lodash.has(obj2, key)) {
+      return {
+        key,
+        value: obj1[key],
+        type: 'deleted',
+        parent,
+      };
+    }
+    if (!lodash.has(obj1, key)) {
+      return {
+        key,
+        value: obj2[key],
+        type: 'added',
+        parent,
+      };
+    }
     if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
       return { key, children: buildAST(obj1[key], obj2[key], key), parent };
     }
-
-    if (obj1[key] === obj2[key]) return { key, value: obj2[key], type: 'same', parent };
-    if (obj1[key] !== obj2[key]) return { key, value: { new: obj2[key], old: obj1[key] }, type: 'updated', parent };
-
+    if (obj1[key] === obj2[key]) {
+      return {
+        key,
+        value: obj2[key],
+        type: 'same',
+        parent,
+      };
+    }
+    if (obj1[key] !== obj2[key]) {
+      return {
+        key,
+        value: { new: obj2[key], old: obj1[key] },
+        type: 'updated',
+        parent,
+      };
+    }
     throw new Error('strange key');
   });
 };
@@ -24,11 +49,22 @@ const buildAST = (obj1, obj2, parent = '') => {
 // render
 const types = {
   standart: { deleted: '-', added: '+', same: ' ' },
-  plain: { deleted: 'was removed', added: 'was added', same: 'same value', updated: 'was updated' },
+  plain: {
+    deleted: 'was removed',
+    added: 'was added',
+    same: 'same value',
+    updated: 'was updated',
+  },
 };
 
 const stringify = (obj) => {
-  const { key, value, renderCopy, level, output } = obj;
+  const {
+    key,
+    value,
+    renderCopy,
+    level,
+    output,
+  } = obj;
   if (typeof value !== 'object') return value;
   if (output === 'plain') return '[complex value]';
   return renderCopy(buildAST(value, value, key), level + 1);
@@ -42,12 +78,31 @@ const renderers = {
     const arr = AST.map((obj) => {
       if (!obj.children && obj.type === 'updated') {
         return [
-          ` ${spaces}${types.standart.added}${obj.key}: ${stringify({ key: obj.key, value: obj.value.new, renderCopy: renderStandart, level })}`,
-          ` ${spaces}${types.standart.deleted}${obj.key}: ${stringify({ key: obj.key, value: obj.value.old, renderCopy: renderStandart, level })}`,
+          ` ${spaces}${types.standart.added}${obj.key}: `
+            + `${stringify({
+              key: obj.key,
+              value: obj.value.new,
+              renderCopy: renderStandart,
+              level,
+            })}`,
+          ` ${spaces}${types.standart.deleted}${obj.key}: `
+            + `${stringify({
+              key: obj.key,
+              value: obj.value.old,
+              renderCopy:
+              renderStandart,
+              level,
+            })}`,
         ];
       }
       if (!obj.children) {
-        return ` ${spaces}${types.standart[obj.type]}${obj.key}: ${stringify({ key: obj.key, value: obj.value, renderCopy: renderStandart, level })}`;
+        return ` ${spaces}${types.standart[obj.type]}${obj.key}: `
+          + `${stringify({
+            key: obj.key,
+            value: obj.value,
+            renderCopy: renderStandart,
+            level,
+          })}`;
       }
       return `  ${spaces}${obj.key}: ${renderStandart(obj.children, level + 1)}`;
     });
