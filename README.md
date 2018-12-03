@@ -16,3 +16,6 @@
 
 ## Compare 2 nested files
 [![asciicast](https://asciinema.org/a/IkrDV8PjhgQBJicRc7voSq6H3.png)](https://asciinema.org/a/IkrDV8PjhgQBJicRc7voSq6H3?speed=3)
+
+## Compare 2 files / 'plain' output format
+[![asciicast](https://asciinema.org/a/NC3jA4h8lYgBL8cKusom1cDwB.png)](https://asciinema.org/a/NC3jA4h8lYgBL8cKusom1cDwB?speed=3)
