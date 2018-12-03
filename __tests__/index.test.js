@@ -71,10 +71,28 @@ test('step5_test3_Nested_ini', () => {
   expect(gendiff(path1, path2, format)).toBe(result);
 });
 
-test('step6_test3_Nested_Plain', () => {
+test('step6_test3_Nested_Plain_json', () => {
   const path1 = '__tests__/__fixtures__/test3before_Nested.json';
   const path2 = '__tests__/__fixtures__/test3after_Nested.json';
   const formatin = 'json';
+  const formatout = 'plain';
+  const result = fs.readFileSync('__tests__/__fixtures__/test3result_Nested_Plain', 'utf8');
+  expect(gendiff(path1, path2, formatin, formatout)).toBe(result);
+});
+
+test('step6_test3_Nested_Plain_yml', () => {
+  const path1 = '__tests__/__fixtures__/test3before_Nested.yml';
+  const path2 = '__tests__/__fixtures__/test3after_Nested.yml';
+  const formatin = 'yml';
+  const formatout = 'plain';
+  const result = fs.readFileSync('__tests__/__fixtures__/test3result_Nested_Plain', 'utf8');
+  expect(gendiff(path1, path2, formatin, formatout)).toBe(result);
+});
+
+test('step6_test3_Nested_Plain_ini', () => {
+  const path1 = '__tests__/__fixtures__/test3before_Nested.ini';
+  const path2 = '__tests__/__fixtures__/test3after_Nested.ini';
+  const formatin = 'ini';
   const formatout = 'plain';
   const result = fs.readFileSync('__tests__/__fixtures__/test3result_Nested_Plain', 'utf8');
   expect(gendiff(path1, path2, formatin, formatout)).toBe(result);
