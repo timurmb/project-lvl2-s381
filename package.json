@@ -1,6 +1,6 @@
 {
   "name": "hexlet2timurmb",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "cli utility - gendiff",
   "keywords": [
     "cli",
@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/timurmb/project-lvl2-s369.git"
+    "url": "git+https://github.com/timurmb/project-lvl2-s381.git"
   },
   "author": "timur meirbekov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/timurmb/project-lvl2-s369/issues"
+    "url": "https://github.com/timurmb/project-lvl2-s381/issues"
   },
-  "homepage": "https://github.com/timurmb/project-lvl2-s369#readme",
+  "homepage": "https://github.com/timurmb/project-lvl2-s381#readme",
   "devDependencies": {
     "@babel/cli": "^7.1.5",
     "@babel/core": "^7.1.6",
