@@ -2,7 +2,7 @@ import commander from 'commander';
 import gendiff from '.';
 
 export default () => commander
-  .version('1.5.3')
+  .version('1.5.4')
   .description('Compares two configuration files and shows a difference.')
   .option('-f, --format [type]', 'output format')
   .arguments('<firstConfig> <secondConfig>')
