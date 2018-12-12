@@ -2,12 +2,11 @@ import commander from 'commander';
 import gendiff from '.';
 
 export default () => commander
-  .version('1.5.2')
+  .version('1.5.3')
   .description('Compares two configuration files and shows a difference.')
-  .option('-f, --formatin [type]', 'Input format')
-  .option('--formatout [type]', 'Output format')
+  .option('-f, --format [type]', 'output format')
   .arguments('<firstConfig> <secondConfig>')
   .action((firstConfig, secondConfig) => {
-    const result = gendiff(firstConfig, secondConfig, commander.formatin, commander.formatout);
+    const result = gendiff(firstConfig, secondConfig, commander.format);
     console.log(result);
   });
