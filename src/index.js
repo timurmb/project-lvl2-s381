@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import selectParser from './parsers';
+import getParser from './parsers';
 import selectRenderer from './renderers';
 import buildAST from './AST';
 
@@ -9,7 +9,7 @@ const normalize = (filepath) => {
   return path.resolve(workingDir, filepath);
 };
 
-const define = (path1, path2) => {
+const defineFormat = (path1, path2) => {
   const format1 = path.extname(path1).substr(1);
   const format2 = path.extname(path2).substr(1);
   if (format1 !== format2 || format1 === '' || format2 === '') throw new Error('unknown input format');
@@ -17,14 +17,14 @@ const define = (path1, path2) => {
 };
 
 function gendiff(path1, path2, outputFormat = 'standart') {
-  const path1Normalized = normalize(path1);
-  const path2Normalized = normalize(path2);
+  const path1WhichHasBeenNormalized = normalize(path1);
+  const path2WhichHasBeenNormalized = normalize(path2);
 
-  const str1 = fs.readFileSync(path1Normalized, 'utf8');
-  const str2 = fs.readFileSync(path2Normalized, 'utf8');
+  const str1 = fs.readFileSync(path1WhichHasBeenNormalized, 'utf8');
+  const str2 = fs.readFileSync(path2WhichHasBeenNormalized, 'utf8');
 
-  const inputFormat = define(path1Normalized, path2Normalized);
-  const parse = selectParser(inputFormat);
+  const inputFormat = defineFormat(path1WhichHasBeenNormalized, path2WhichHasBeenNormalized);
+  const parse = getParser(inputFormat);
   const obj1 = parse(str1);
   const obj2 = parse(str2);
 
