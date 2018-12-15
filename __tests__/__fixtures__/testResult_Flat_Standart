@@ -1,9 +1,0 @@
-{
-  key1: before1
- +key2: after2
- -key2: 2
- +key3: 3
- -key3: before3
- -key4: 4
- +key5: 5
-}

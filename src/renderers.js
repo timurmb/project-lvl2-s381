@@ -30,7 +30,7 @@ const renderers = {
     const spaces = ' '.repeat(level * 2);
 
     const arr = AST.map((obj) => {
-      if (obj.type === 'withChildren') return `  ${spaces}${obj.key}: ${renderStandart(obj.children, level + 1)}`;
+      if (obj.type === 'nested') return `  ${spaces}${obj.key}: ${renderStandart(obj.children, level + 1)}`;
       if (obj.type === 'updated') {
         return [
           ` ${spaces}${types.standart.added}${obj.key}: `
@@ -67,7 +67,7 @@ const renderers = {
     const arr = AST.map((obj) => {
       const parents = (obj.parent !== '') ? [...grandParents, obj.parent] : grandParents;
 
-      if (obj.type === 'withChildren') return renderPlain(obj.children, parents);
+      if (obj.type === 'nested') return renderPlain(obj.children, parents);
       if (obj.type === 'updated') {
         return `${[...parents, obj.key].join('.')} ${types.plain.updated}. `
             + `From ${stringify({ value: obj.valueOld, output: 'plain' })} `
