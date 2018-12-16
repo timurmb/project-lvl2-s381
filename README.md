@@ -19,3 +19,6 @@
 
 ## Compare 2 files / 'plain' output format
 [![asciicast](https://asciinema.org/a/FvFNQQvT02qCIhW2SxV1fYRCx.png)](https://asciinema.org/a/FvFNQQvT02qCIhW2SxV1fYRCx?speed=3)
+
+## Compare 2 files / 'json' output format
+[![asciicast](https://asciinema.org/a/D1k4XQZm30wSvslSlZiiYkY5O.png)](https://asciinema.org/a/D1k4XQZm30wSvslSlZiiYkY5O?speed=3)
