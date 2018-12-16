@@ -1,24 +1,24 @@
-import stringify from '../utils';
+const stringify = (value) => {
+  if (typeof value !== 'object') return value;
+  return '[complex value]';
+};
 
 function renderPlain(AST, grandParents = [], parent = '') {
   const arr = AST.map((obj) => {
     const parents = (parent !== '') ? [...grandParents, parent] : grandParents;
+    const path = [...parents, obj.key].join('.');
 
     switch (obj.type) {
       case 'nested':
         return renderPlain(obj.children, parents, obj.key);
       case 'updated':
-        return `${[...parents, obj.key].join('.')} was updated. `
-          + `From ${stringify({ value: obj.valueOld, output: 'plain' })} `
-          + `to ${stringify({ value: obj.valueNew, output: 'plain' })}`;
+        return `${path} was updated. From ${stringify(obj.valueOld)} to ${stringify(obj.valueNew)}`;
       case 'deleted':
-        return `${[...parents, obj.key].join('.')} was removed`;
+        return `${path} was removed`;
       case 'added':
-        return `${[...parents, obj.key].join('.')} was added with value: `
-          + `${stringify({ value: obj.valueNew, output: 'plain' })}`;
+        return `${path} was added with value: ${stringify(obj.valueNew)}`;
       case 'same':
-        return `${[...parents, obj.key].join('.')} same value: `
-          + `${stringify({ value: obj.valueOld, output: 'plain' })}`;
+        return `${path} same value: ${stringify(obj.valueOld)}`;
       default:
         throw new Error('unknown object type in AST');
     }

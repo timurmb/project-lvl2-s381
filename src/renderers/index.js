@@ -1,5 +1,5 @@
-import renderStandart from './renderers/renderStandart';
-import renderPlain from './renderers/renderPlain';
+import renderStandart from './renderStandart';
+import renderPlain from './renderPlain';
 
 const renderers = {
   standart: renderStandart,
