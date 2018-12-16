@@ -9,7 +9,6 @@ const renderers = {
 };
 
 export default (format) => {
-  console.log(format);
   if (!renderers[format]) throw new Error(`unknown rendering format - ${format}`);
   return renderers[format];
 };
