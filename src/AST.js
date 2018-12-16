@@ -5,7 +5,7 @@ const nodes = [
     check: ({ key, obj2 }) => !lodash.has(obj2, key),
     createNode: ({ key, value1 }) => ({
       key,
-      valueOld: value1,
+      oldValue: value1,
       type: 'deleted',
     }),
   },
@@ -13,7 +13,7 @@ const nodes = [
     check: ({ key, obj1 }) => !lodash.has(obj1, key),
     createNode: ({ key, value2 }) => ({
       key,
-      valueNew: value2,
+      newValue: value2,
       type: 'added',
     }),
   },
@@ -26,8 +26,8 @@ const nodes = [
       buildAST,
     }) => ({
       key,
-      valueNew: value2,
-      valueOld: value1,
+      newValue: value2,
+      oldValue: value1,
       type: 'nested',
       children: buildAST(value1, value2, key),
     }),
@@ -36,8 +36,8 @@ const nodes = [
     check: ({ value1, value2 }) => value1 === value2,
     createNode: ({ key, value1 }) => ({
       key,
-      valueNew: value1,
-      valueOld: value1,
+      newValue: value1,
+      oldValue: value1,
       type: 'same',
     }),
   },
@@ -49,8 +49,8 @@ const nodes = [
       value2,
     }) => ({
       key,
-      valueNew: value2,
-      valueOld: value1,
+      newValue: value2,
+      oldValue: value1,
       type: 'updated',
     }),
   },
