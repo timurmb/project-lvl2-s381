@@ -3,22 +3,18 @@ import lodash from 'lodash';
 const nodes = [
   {
     check: ({ key, obj2 }) => !lodash.has(obj2, key),
-    createNode: ({ key, value1, parent }) => ({
+    createNode: ({ key, value1 }) => ({
       key,
-      value: value1,
+      valueOld: value1,
       type: 'deleted',
-      parent,
-      children: [],
     }),
   },
   {
     check: ({ key, obj1 }) => !lodash.has(obj1, key),
-    createNode: ({ key, value2, parent }) => ({
+    createNode: ({ key, value2 }) => ({
       key,
-      value: value2,
+      valueNew: value2,
       type: 'added',
-      parent,
-      children: [],
     }),
   },
   {
@@ -27,25 +23,22 @@ const nodes = [
       key,
       value1,
       value2,
-      parent,
       buildAST,
     }) => ({
       key,
       valueNew: value2,
       valueOld: value1,
       type: 'nested',
-      parent,
       children: buildAST(value1, value2, key),
     }),
   },
   {
     check: ({ value1, value2 }) => value1 === value2,
-    createNode: ({ key, value1, parent }) => ({
+    createNode: ({ key, value1 }) => ({
       key,
-      value: value1,
+      valueNew: value1,
+      valueOld: value1,
       type: 'same',
-      parent,
-      children: [],
     }),
   },
   {
@@ -54,21 +47,18 @@ const nodes = [
       key,
       value1,
       value2,
-      parent,
     }) => ({
       key,
       valueNew: value2,
       valueOld: value1,
       type: 'updated',
-      parent,
-      children: [],
     }),
   },
 ];
 
 const getNode = args => nodes.find(({ check }) => check(args));
 
-const buildAST = (obj1, obj2, parent = '') => {
+const buildAST = (obj1, obj2) => {
   const keys = lodash.union(Object.keys(obj1), Object.keys(obj2));
   return keys.map((key) => {
     const value1 = obj1[key];
@@ -79,7 +69,6 @@ const buildAST = (obj1, obj2, parent = '') => {
       obj2,
       value1,
       value2,
-      parent,
       buildAST,
     };
 
